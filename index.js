@@ -3,6 +3,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const playerDisplay = document.querySelector('.display-player');
     const resetButton = document.querySelector('#reset');
     const announcer = document.querySelector('.announcer');
+    const audioPal = new Audio('./audios/hinoPalmeiras.mp3');
+    const audioCor = new Audio('./audios/hinoCorinthians.mp3');
 
     let board = ['', '', '', '', '', '', '', '', ''];
     let currentPlayer = 'X';
@@ -49,6 +51,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (roundWon) {
             announce(currentPlayer === 'X' ? PLAYERX_WON : PLAYERO_WON);
+            if(currentPlayer === 'X'){
+                audioPal.play();
+            }else{
+                audioCor.play();
+            }
             isGameActive = false;
             return;
         }
@@ -73,11 +80,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const isValidAction = (tile) => {
         let contents = tile.innerHTML;
-        console.log(contents)
         if (
             tile.innerHTML === '<img src="https://i0.wp.com/figurinhasparawhats.com/wp-content/uploads/2020/09/add3bcc5-00ed-4547-ad2a-366c98468b26.png?resize=300%2C300&amp;ssl=1" width="50px" height="50px">' 
         || tile.innerHTML === '<img src="https://images.all-free-download.com/images/graphiclarge/esporte_clube_corinthians_de_laguna_sc_124483.jpg" width="50px" height="50px">') {
-            console.log("Foi")
         return false;
         }
         return true;
@@ -107,6 +112,11 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     const resetBoard = () => {
+        audioPal.pause();
+        audioPal.currentTime = 0;
+        audioCor.pause();
+        audioCor.currentTime = 0;
+   
         board = ['', '', '', '', '', '', '', '', ''];
         isGameActive = true;
         announcer.classList.add('hide');
